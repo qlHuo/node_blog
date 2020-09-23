@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora的node博客</title>
+    <meta name="description" content='Aurora的node博客，记录node学习中遇到的问题'>
+    <meta name="keywords" content='Node, Nodejs, Node技术文章'>
+    <link rel="stylesheet" href="/stylesheets/normalize.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    
+</head>
+<body>
+    <section>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <span>用户名：</span><input type="text" name="name" placeholder="请输入用户名" class="form-input"/>
+            </div>
+            <div class="form-group">
+                <span>密码：</span><input type="password" name="password" placeholder="请输入密码" class="form-input"/>
+            </div>
+            <% if(message) { %>
+                <p> <%= message %> </p>
+            <% } %>
+            <div class="form-group">
+                <input type="submit" value="登陆" class="submit-input"/>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

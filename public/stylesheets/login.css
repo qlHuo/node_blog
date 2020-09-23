@@ -1,0 +1,43 @@
+body {
+    background: url('../images/login1.jpg') no-repeat;
+    background-size: 100%;
+}
+section {
+    width: 360px;
+    padding: 20px 20px 10px;
+    background-color: rgba(255, 255, 255, .6);
+    border-radius: 10px;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, .3);
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.form-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    line-height: 50px;
+    margin: 10px 0; 
+}
+.form-group span {
+    flex: 1;
+}
+.form-group .form-input {
+    flex: 4;
+    height: 36px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .8);
+    outline: none;
+    padding-left: 8px;
+}
+.submit-input {
+    width: 60px;
+    height: 40px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
