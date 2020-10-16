@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -19,6 +20,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// 应用的 session 配置。session 配置要放到引用路由的前面
+app.use(session({
+  secret: 'blog',
+  cookie: { maxAge: 1000 * 60 * 24 * 30 },
+  resave: false,
+  saveUninitialized: true
+}))
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

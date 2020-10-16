@@ -25,20 +25,19 @@ router.post('/login', function (req, res, next) {
       res.render('login', { message: '用户名或密码错误！' });
       return;
     }
-    // req.session.userSign = true;
-    // req.session.userID = user.authorID
+    req.session.user = user;
     res.redirect('/');
   })
 })
 
 /* 首页 */
 router.get('/', function (req, res, next) {
-  var query = 'SELECT * FROM article';
+  var query = 'SELECT * FROM article ORDER BY articleID DESC';
   mysql.query(query, function (err, rows, fields) {
     var articles = rows;
     articles.forEach(ele => {
       var year = ele.articleTime.getFullYear();
-      var month = ele.articleTime.getMonth() + 1 > 10 ? ele.articleTime.getMonth() : '0' + ele.articleTime.getMonth();
+      var month = ele.articleTime.getMonth() + 1 + 1 > 10 ? ele.articleTime.getMonth() + 1 : '0' + ele.articleTime.getMonth();
       var date = ele.articleTime.getDate() + 1 > 10 ? ele.articleTime.getDate() : '0' + ele.articleTime.getDate();
       ele.articleTime = year + '-' + month + '-' + date
     });
@@ -56,19 +55,45 @@ router.get('/article/:articleID', function (req, res, next) {
       return
     }
     // console.log(rows)
+    var article = rows[0];
     var query = 'UPDATE article SET articleClick=articleClick+1 WHERE articleID=' + mysql.escape(articleID)
     mysql.query(query, function (err, rows, fields) {
       if (err) {
         console.log(err);
         return
       }
-      var article = rows[0];
+
+      console.log(article);
       var year = article.articleTime.getFullYear();
-      var month = article.articleTime.getMonth() + 1 > 10 ? article.articleTime.getMonth() : '0' + article.articleTime.getMonth();
+      var month = article.articleTime.getMonth() + 1 + 1 > 10 ? article.articleTime.getMonth() + 1 : '0' + article.articleTime.getMonth();
       var date = article.articleTime.getDate() + 1 > 10 ? article.articleTime.getDate() : '0' + article.articleTime.getDate();
       article.articleTime = year + '-' + month + '-' + date
       res.render('article', { article: article })
     })
+  })
+})
+
+/* 文章发布页面实现 */
+router.get('/edit', function (req, res, next) {
+  var user = req.session.user;
+  if (!user) {
+    res.redirect('login')
+    return
+  }
+  res.render('edit')
+})
+// 文章发布
+router.post('/edit', function (req, res, next) {
+  var title = req.body.title;
+  var content = req.body.content;
+  var author = req.session.user.authorName;
+  var query = 'INSERT article  SET articleTitle=' + mysql.escape(title) + ', articleAuthor=' + mysql.escape(author) + ', articleContent=' + mysql.escape(content) + ',articleTime=CURDATE()';
+  mysql.query(query, function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    res.redirect('/')
   })
 })
 
