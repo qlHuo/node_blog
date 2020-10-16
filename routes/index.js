@@ -3,9 +3,19 @@ var router = express.Router();
 var crypto = require('crypto');
 var mysql = require('../database');
 
-/* GET home page. */
+/* 首页 */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  var query = 'SELECT * FROM article';
+  mysql.query(query, function (err, rows, fields) {
+    var articles = rows;
+    articles.forEach(ele => {
+      var year = ele.articleTime.getFullYear();
+      var month = ele.articleTime.getMonth() + 1 > 10 ? ele.articleTime.getMonth() : '0' + ele.articleTime.getMonth();
+      var date = ele.articleTime.getDate() + 1 > 10 ? ele.articleTime.getDate() : '0' + ele.articleTime.getDate();
+      ele.articleTime = year + '-' + month + '-' + date
+    });
+    res.render('index', { articles: articles })
+  })
 });
 // 登录页
 router.get('/login', function (req, res, next) {
@@ -29,8 +39,8 @@ router.post('/login', function (req, res, next) {
       res.render('login', { message: '用户名或密码错误！' });
       return;
     }
-    req.session.userSign = true;
-    req.session.userID = user.authorID
+    // req.session.userSign = true;
+    // req.session.userID = user.authorID
     res.redirect('/');
   })
 })
