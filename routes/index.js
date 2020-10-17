@@ -32,17 +32,43 @@ router.post('/login', function (req, res, next) {
 
 /* 首页 */
 router.get('/', function (req, res, next) {
-  var query = 'SELECT * FROM article ORDER BY articleID DESC';
-  mysql.query(query, function (err, rows, fields) {
+  // 通过 page 实现切换分页页面
+  var page = req.query.page || 1;
+  var start = (page - 1) * 8;
+  var end = page * 8;
+  var queryCount = 'SELECT COUNT(*) AS articleNum FROM article';
+  var queryArticle = 'SELECT * FROM article ORDER BY articleID DESC LIMIT ' + start + ',' + end;
+  mysql.query(queryArticle, function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return
+    }
     var articles = rows;
-    articles.forEach(ele => {
+    // console.log(articles);
+
+    articles.forEach(function (ele) {
       var year = ele.articleTime.getFullYear();
       var month = ele.articleTime.getMonth() + 1 + 1 > 10 ? ele.articleTime.getMonth() + 1 : '0' + ele.articleTime.getMonth();
       var date = ele.articleTime.getDate() + 1 > 10 ? ele.articleTime.getDate() : '0' + ele.articleTime.getDate();
       ele.articleTime = year + '-' + month + '-' + date
     });
-    res.render('index', { articles: articles, user: req.session.user })
+
+    mysql.query(queryCount, function (err, rows, fields) {
+      // 文章总数量
+      var articleNum = rows[0].articleNum;
+      // console.log(articleNum);
+      // 分页数
+      var pageNum = Math.ceil(articleNum / 8);
+      res.render('index', {
+        articles: articles,
+        user: req.session.user,
+        pageNum: pageNum,
+        page: page,
+        articleNum: articleNum
+      });
+    })
   })
+
 });
 
 /* 文章内容页 */

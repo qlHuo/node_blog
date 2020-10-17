@@ -210,3 +210,28 @@ span.delete {
 span.delete a:hover {
   color: #183De8;
 }
+
+/* 分页实现 */
+.page {
+  text-align: center;
+  margin-top: 15px;
+}
+.page span {
+  display: inline-block;
+  background-color: #fff;
+  width: 24px;
+  margin: 0 5px;
+  line-height: 24px;
+  height: 24px;
+}
+.page span a {
+  display: block;
+}
+.page span.active a{
+  background-color: deeppink;
+  color: #fff;
+}
+.page span:hover a{
+  background-color: deeppink;
+  color: #fff;
+}

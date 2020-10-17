@@ -24,8 +24,28 @@
         </li>
         <% } %>
       </ul>
+      <!-- 显示分页 -->
+      <% if(pageNum > 1) { %> 
+        <section class="page">
+          <% for(var i = 1, max = pageNum; i <= max; i++) { %>
+            <span <% if (i == page) { %> class='active' <% } %>>
+              <a href="/?page=<%= i %>"> <%= i %> </a>
+            </span>
+          <% } %>
+        </section>
+      <% } %>
+      <!-- 如果没有文章的提示 -->
+      <% if(articleNum < 1) { %>
+        <section>
+          这里还没有文章，快去写点吧~
+        </section>
+      <% } %>
     </section>
+
+    
   </section>
+  
+
   <%- include('./public/footer.ejs') %>
 </body>
 </html>
