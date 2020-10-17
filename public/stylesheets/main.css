@@ -160,3 +160,39 @@ section.articles {
 .text-group label {
   vertical-align: top;
 }
+
+/* 友情链接 */
+.friends h2 {
+  text-align: center;
+}
+.friends li {
+  float: left;
+  width: 25%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+/* .friends li a {
+  background-color: deeppink;
+} */
+.friends li a:hover {
+  color: #183De8;
+}
+
+/* 关于博客 */
+.about h2{
+  text-align: center;
+}
+.about p {
+  text-indent: 2em;
+}
+
+/* 404 */
+.no-found {
+  background: url('../images/404.jpg') no-repeat;
+  background-size: 100%;
+  color: #fff;
+  font-size: 68px;
+  text-align: center;
+  margin-top: 180px;
+}

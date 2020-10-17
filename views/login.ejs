@@ -13,10 +13,10 @@
     <section>
         <form action="/login" method="POST">
             <div class="form-group">
-                <span>用户名：</span><input type="text" name="name" placeholder="请输入用户名" class="form-input"/>
+                <span>用户名：</span><input type="text" name="name" placeholder="请输入用户名" class="form-input" value="node"/>
             </div>
             <div class="form-group">
-                <span>密码：</span><input type="password" name="password" placeholder="请输入密码" class="form-input"/>
+                <span>密码：</span><input type="password" name="password" placeholder="请输入密码" class="form-input" value="123456"/>
             </div>
             <% if(message) { %>
                 <p> <%= message %> </p>
