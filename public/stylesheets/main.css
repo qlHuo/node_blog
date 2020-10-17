@@ -204,3 +204,9 @@ span.modify {
 span.modify a:hover {
   color: #183De8;
 }
+span.delete {
+  float: right;
+}
+span.delete a:hover {
+  color: #183De8;
+}

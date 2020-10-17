@@ -155,4 +155,22 @@ router.post('/modify/:articleID', function (req, res, next) {
   })
 })
 
+/* 删除文章 */
+router.get('/delete/:articleID', function (req, res, next) {
+  var articleID = req.params.articleID;
+  var user = req.session.user;
+  var query = 'DELETE FROM article WHERE articleID=' + mysql.escape(articleID);
+  if (!user) {
+    res.redirect('/login');
+    return
+  }
+  mysql.query(query, function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    res.redirect('/')
+  })
+})
+
 module.exports = router;
