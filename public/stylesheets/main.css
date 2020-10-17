@@ -196,3 +196,11 @@ section.articles {
   text-align: center;
   margin-top: 180px;
 }
+
+/* 修改文章 */
+span.modify {
+  float: right;
+}
+span.modify a:hover {
+  color: #183De8;
+}
