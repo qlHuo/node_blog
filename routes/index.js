@@ -113,4 +113,46 @@ router.get('/logout', function (req, res, next) {
   res.redirect('/')
 })
 
+/* 修改文章页面 */
+router.get('/modify/:articleID', function (req, res, next) {
+  var articleID = req.params.articleID;
+  var user = req.session.user;
+  var query = 'SELECT * FROM article WHERE articleID=' + mysql.escape(articleID);
+  if (!user) {
+    res.redirect('/login');
+    return
+  }
+
+  mysql.query(query, function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    var article = rows[0];
+    var title = article.articleTitle;
+    var content = article.articleContent;
+    console.log(title, content);
+    res.render('modify', { user: user, title: title, content: content });
+  })
+})
+
+/* 提交修改文章 */
+router.post('/modify/:articleID', function (req, res, next) {
+  var articleID = req.params.articleID;
+  var user = req.session.user;
+  var title = req.body.title;
+  var content = req.body.content;
+  console.log(req.body);
+  // console.log(title);
+  // console.log(content);
+  var query = 'UPDATE article SET articleTitle=' + mysql.escape(title) + ',articleContent=' + mysql.escape(content) + ' WHERE articleID=' + mysql.escape(articleID);
+  mysql.query(query, function (err, row, fields) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    res.redirect('/')
+  })
+})
+
 module.exports = router;
